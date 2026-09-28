@@ -1,0 +1,6 @@
+id: dsh-java-storymap-plugin
+name: DSH Story Mapper Plugin
+version: 0.1.0
+author: Xiaofuge
+description: User journey mapping tools (ingest, stage split, painpoint scan, emotion curve, markdown export) for DeepSeek Harness. Outputs are hypotheses, not validated research.
+entrypoint: cn.xiaofuge.dsh.com.dsh.storymap.plugin.DshStoryMapperPlugin

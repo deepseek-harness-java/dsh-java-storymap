@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DSH Story Mapper</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">SM</div>
+      <div><strong>Story Mapper</strong><span>Powered by Harness</span></div>
+    </div>
+    <button class="primary block" id="newConversation">＋ 新对话</button>
+    <div class="section-label"><span>对话记录</span></div>
+    <div id="conversationList" class="item-list conversation-list"></div>
+  </aside>
+
+  <main class="main">
+    <header class="main-header">
+      <div>
+        <div class="title-row">
+          <span id="statusDot" class="dot"></span>
+          <h1 id="currentName">用户旅程画板</h1>
+        </div>
+        <p id="currentDetail">记录入库 · 阶段拆分 · 痛点扫描 · 情绪曲线 · 导出（输出为假设，需用户验证）</p>
+      </div>
+      <div class="header-actions">
+        <button class="ghost" id="openIngest">📥 录入旅程</button>
+        <button class="ghost icon-btn" id="toggleTheme" title="切换主题">🌙</button>
+      </div>
+    </header>
+
+    <div id="workspace" class="workspace">
+      <section class="center">
+        <div id="chatMessages" class="chat-scroll"></div>
+        <div class="composer-wrap">
+          <div id="streamStatus" class="stream-status hidden">
+            <span id="streamStatusText"><span class="status-spinner"></span>AI 正在思考</span>
+          </div>
+          <div class="composer">
+            <textarea id="chatInput" rows="1" placeholder="让 AI 整理旅程，例如：拆分阶段并扫描痛点"></textarea>
+            <div class="composer-bar">
+              <span class="composer-hint"><kbd>⌘</kbd>+<kbd>↵</kbd> 发送 · 输出为假设 · 需真实用户验证</span>
+              <div class="composer-actions">
+                <button class="ghost small hidden" id="stopStream">停止</button>
+                <button class="send-btn" id="sendMessage" title="发送">↑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="resource-sidebar">
+        <div class="resource-scroll">
+          <div class="resource-header">
+            <b>画板工作台</b>
+            <button class="ghost small" id="refreshResource">刷新</button>
+          </div>
+          <nav class="resource-tabs">
+            <button data-resource-tab="journeys" class="active">旅程</button>
+            <button data-resource-tab="map">画板</button>
+          </nav>
+          <section class="panel" data-tab="journeys">
+            <div class="panel-title"><span>已录入旅程</span></div>
+            <div class="panel-body" style="padding:8px">
+              <div id="journeysCard" class="muted small">点击"刷新"加载</div>
+            </div>
+          </section>
+          <section class="panel hidden" data-tab="map">
+            <div class="panel-title"><span>旅程画板</span></div>
+            <div class="panel-body" style="padding:8px">
+              <button class="ghost block" id="runMap">生成画板（阶段+情绪+痛点）</button>
+              <div id="mapCard" class="muted small" style="margin-top:8px">在"旅程"页选择一段旅程后点生成</div>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="modal hidden" id="ingestModal">
+    <form class="modal-card" id="ingestForm" style="width:560px">
+      <h2>录入旅程记录</h2>
+      <label>名称<input name="name" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text)" placeholder="老张-外卖旅程"></label>
+      <label>来源类型
+        <select name="sourceType" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text)">
+          <option value="interview">interview（访谈）</option>
+          <option value="feedback">feedback（反馈）</option>
+          <option value="observation">observation（观察）</option>
+        </select>
+      </label>
+      <label>记录原文
+        <textarea name="content" required rows="9" style="font:13px/1.6 sans-serif;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text)" placeholder="含阶段线索：认知/考虑/下单/配送/收餐/使用/续费/推荐/流失…"></textarea></label>
+      <p class="muted small">原文只入库存档，分析用工具跑（结果为假设，需真实用户验证）。</p>
+      <div class="modal-actions"><button type="button" class="ghost" id="cancelIngestModal">取消</button><button class="primary">入库</button></div>
+    </form>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
